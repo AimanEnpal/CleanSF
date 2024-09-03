@@ -1,0 +1,29 @@
+// ==UserScript==
+// @name         Hide extra Info
+// @namespace    http://tampermonkey.net/
+// @version      2024-08-19
+// @description  Entfernt die unnötige extra info die nur stört
+// @author       You
+// @match        https://enpalgmbh2.lightning.force.com/*
+// @icon         https://cdn.icon-icons.com/icons2/2699/PNG/512/salesforce_logo_icon_170764.png
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    function hideElements() {
+        document.querySelectorAll('.forceChatterExposedFeedDesktop').forEach(function(element) {
+            if (element.textContent.includes('Session Time erstellt')) {
+                element.style.display = 'none';
+            }
+        });
+    }
+
+    // Initial hide
+    hideElements();
+
+    // Observe for changes in the DOM
+    const observer = new MutationObserver(hideElements);
+    observer.observe(document.body, { childList: true, subtree: true });
+})();
